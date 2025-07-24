@@ -43,10 +43,12 @@
     <div class="col-md-3">
       <a href="/asset/add" class="text-decoration-none">
         <div class="card shadow-sm border-0 text-center bg-primary text-white">
-          <div class="card-body">
-            <h5 class="card-title">Add New Asset</h5>
-            <i class="bi bi-plus-circle" style="font-size: 2rem;"></i>
-          </div>
+          <% if(user && user.role === 'admin') { %>
+            <div class="card-body">
+              <h5 class="card-title">Add New Asset</h5>
+              <i class="bi bi-plus-circle" style="font-size: 2rem;"></i>
+            </div>
+          <% } %>
         </div>
       </a>
     </div>

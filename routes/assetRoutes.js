@@ -17,11 +17,6 @@ const roleCheck = require('../middleware/roleCheck');
 
 const idPrefixes = require('../utils/idPrefixes');
 
-// function isAuthenticated(req, res, next){
-//   if(req.session && req.session.user) return next();
-//   res.redirect('/login');
-// }
-
 // ----------Dashboard---------------
 router.get('/dashboard', roleCheck(['admin', 'trainee']), async (req, res) => {
   try {
@@ -84,17 +79,6 @@ router.get('/scan', roleCheck(['admin', 'trainee']), (req, res) => {
   res.render('asset/scanQR');
 });
 
-//-------------View Asset by ID (used in QR code)-----------
-// router.get('/:id', async (req, res) => {
-//   try {
-//     const asset = await Asset.findById(req.params.id);
-//     if(!asset) return res.status(404).send('Asset not found');
-//     res.render('asset/assetDetail', {asset});
-//   } catch (err) {
-//     console.error("❌ Error loading asset details:", err);
-//     res.status(500).send("Internal server error");
-//   }
-// });
 
 //-------------Add asset images----------
 const storage = multer.diskStorage({
@@ -109,8 +93,12 @@ const storage = multer.diskStorage({
 const upload = multer({storage});
 
 //------------Add Asset Form----------
-router.get('/add', roleCheck(['admin']), (req, res) => {
-  res.render('asset/addAsset', {asset: null});
+router.get('/add', roleCheck(['admin']), async (req, res) => {
+  const admins = await User.find({role: 'admin'});
+  console.log(admins);
+  res.render('asset/addAsset', {
+    asset: null
+  });
 });
 
 router.post('/add', roleCheck(['admin']), upload.single('image'), async (req, res) => {
@@ -220,7 +208,6 @@ router.get('/:id', roleCheck(['admin', 'trainee']), async (req, res) => {
     const asset = await Asset.findById(req.params.id);
     if(!asset) return res.status(404).send('Asset not found');
     res.render('asset/assetDetail', { asset });
-    // res.render('asset/assetDetail', {asset, user: req.session.user || null});
   } catch(err) {
     console.error('❌ Error loading asset details:', err);
     res.status(500).send('Server error');

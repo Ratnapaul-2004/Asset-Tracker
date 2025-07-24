@@ -12,7 +12,8 @@ module.exports = function roleCheck(allowedRoles = []) {
       return next();
     } else {
       return res.status(403).render('auth/unauthorized', {
-        message: 'You do not have permission to view this page'
+        message: 'You do not have permission to view this section',
+        user
       });
     }
   };

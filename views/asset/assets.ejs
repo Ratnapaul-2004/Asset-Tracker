@@ -36,10 +36,11 @@
           <th>Model No</th>
           <th>Class</th>
           <th>Owner</th>
-          <!-- <th>Details</th> -->
-          <th>QR Code</th>
-          <th>Edit</th>
-          <th>Delete</th>
+          <th>View</th>
+          <% if(user && user.role === 'admin') { %>
+            <th>Edit</th>
+            <th>Delete</th>
+          <% } %>
         </tr>
       </thead>
 
@@ -55,17 +56,18 @@
               <a href="/asset/<%= asset._id %>" class="info btn-sm">Details</a>
             </td> -->
             <td>
-              <!-- <img src="<%= asset.qrCode %>" alt="QR Code" width="80"/> -->
               <a href="/asset/<%= asset._id %>">
                 <img src="<%= asset.qrCode %>" alt="QR Code" width="80"/>
               </a>
             </td>
-            <td>
-              <a href="/asset/edit/<%= asset._id %>" class="warning btn-sm">Edit</a>
-            </td>
-            <td>
-              <a href="/asset/delete/<%= asset._id %>" class="btn btn-sm btn-danger">Delete</a>
-            </td>
+            <% if(user && user.role === 'admin') { %>
+              <td>
+                <a href="/asset/edit/<%= asset._id %>" class="warning btn-sm">Edit</a>
+              </td>
+              <td>
+                <a href="/asset/delete/<%= asset._id %>" class="btn btn-sm btn-danger">Delete</a>
+              </td>
+            <% } %>            
           </tr>
         <% }) %>
       </tbody>
