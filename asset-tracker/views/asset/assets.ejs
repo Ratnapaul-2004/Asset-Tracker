@@ -1,0 +1,76 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+  <h2>📦 All Assets</h2>
+
+  <% if(assets.length === 0){ %>
+    <p class="text-muted">No Assets found</p>
+  <% } else { %>
+    <form class="mb-4" method="GET" action="/asset">
+      <div class="row g-2">
+        <div class="col-md-4">
+          <input type="text" name="search" class="form-control" placeholder="Search by name..." value="<%= search %>">
+        </div>
+
+        <div class="col-md-4">
+          <select name="type" class="form-control">
+            <option value="">All Types</option>
+            <option value="Hardware" <%= type === 'Hardware' ? 'selected' : '' %>>Hardware</option>
+            <option value="Software" <%= type === 'Software' ? 'selected' : '' %>>Software</option>
+            <option value="Other" <%= type === 'Other' ? 'selected' : '' %>>Other</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <button type="submit" class="btn btn-primary w-100">Search</button>
+        </div>
+
+        <a href="/asset/scan" class="btn btn-success">📷 Scan QR</a>
+      </div>
+    </form>
+
+    <table class="table table-bordered mt-3">
+      <thead>
+        <tr>
+          <th>Asset Id</th>
+          <th>Name</th>
+          <th>Model No</th>
+          <th>Class</th>
+          <th>Owner</th>
+          <!-- <th>Details</th> -->
+          <th>QR Code</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% assets.forEach(asset => { %>
+          <tr>
+            <td><%= asset.manualId %></td>
+            <td><%= asset.name %></td>
+            <td><%= asset.modelNo %></td>
+            <td><%= asset.deviceClass %></td>
+            <td><%= asset.owner %></td>
+            <!-- <td>
+              <a href="/asset/<%= asset._id %>" class="info btn-sm">Details</a>
+            </td> -->
+            <td>
+              <!-- <img src="<%= asset.qrCode %>" alt="QR Code" width="80"/> -->
+              <a href="/asset/<%= asset._id %>">
+                <img src="<%= asset.qrCode %>" alt="QR Code" width="80"/>
+              </a>
+            </td>
+            <td>
+              <a href="/asset/edit/<%= asset._id %>" class="warning btn-sm">Edit</a>
+            </td>
+            <td>
+              <a href="/asset/delete/<%= asset._id %>" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+</div>
+
+<%- include('../partials/footer') %>

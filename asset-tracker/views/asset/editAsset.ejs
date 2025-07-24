@@ -1,0 +1,179 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+  <h2>✏️ Edit Asset</h2>
+  <form action="/asset/edit/<%= asset._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+
+    <div class="accordion" id="assetFormAccordion">
+
+      <!-- Device Details -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingDevice">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#deviceDetails" aria-expanded="true">
+            🖥️ Device Details
+          </button>
+        </h2>
+        <div id="deviceDetails" class="accordion-collapse collapse show">
+          <div class="accordion-body">
+
+            <div class="mb-3">
+              <label>Asset Name</label>
+              <input type="text" name="name" value="<%= asset.name %>" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+              <label>Device Class</label>
+              <input type="text" name="deviceClass" value="<%= asset.deviceClass %>" class="form-control">
+            </div>
+
+            <div class="mb-3">
+              <label>Owner</label>
+              <input type="text" name="owner" value="<%= asset.owner %>" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+              <label>Description</label>
+              <textarea name="description" class="form-control"><%= asset.description %></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label>Upload New Image</label>
+              <input type="file" name="image" class="form-control">
+            </div>
+
+            <div class="mb-3">
+              <label>Device Type</label>
+              <select name="deviceType" class="form-control">
+                <option selected><%= asset.deviceType %></option>
+                <option>Laptop</option>
+                <option>Desktop</option>
+                <option>Printer</option>
+                <option>Scanner</option>
+                <option>Workstation</option>
+                <option>Monitor</option>
+                <option>Switch</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label>If Other, Enter Device Type</label>
+              <input type="text" name="otherDeviceType" value="<%= asset.otherDeviceType %>" class="form-control">
+            </div>
+
+            <div class="mb-3">
+              <label>Make</label>
+              <input type="text" name="make" value="<%= asset.make %>" class="form-control">
+            </div>
+
+            <div class="mb-3">
+              <label>Model No</label>
+              <input type="text" name="modelNo" value="<%= asset.modelNo %>" class="form-control">
+            </div>
+
+            <div class="mb-3">
+              <label>Serial No</label>
+              <input type="text" name="serialNo" value="<%= asset.serialNo %>" class="form-control">
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Custodian Details -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingCustodian">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#custodianDetails">
+            👤 Custodian Details
+          </button>
+        </h2>
+        <div id="custodianDetails" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            <div class="mb-3">
+              <label>Custodian Name</label>
+              <input type="text" name="custodianName" value="<%= asset.custodianName %>" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label>Designation</label>
+              <input type="text" name="designation" value="<%= asset.designation %>" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label>Employee ID</label>
+              <input type="text" name="employeeId" value="<%= asset.employeeId %>" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label>Department</label>
+              <input type="text" name="department" value="<%= asset.department %>" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Network Details -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingNetwork">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#networkDetails">
+            🌐 Network Details
+          </button>
+        </h2>
+        <div id="networkDetails" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            <div class="mb-3">
+              <label>Operating System</label>
+              <input type="text" name="operatingSystem" value="<%= asset.operatingSystem %>" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label>IP User Name</label>
+              <input type="text" name="ipUserName" value="<%= asset.ipUserName %>" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label>IP Address</label>
+              <input type="text" name="ipAddress" value="<%= asset.ipAddress %>" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label>MAC Address</label>
+              <input type="text" name="macAddress" value="<%= asset.macAddress %>" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stock / Location Details -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingStock">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#stockDetails">
+            📦 Stock / Location Details
+          </button>
+        </h2>
+        <div id="stockDetails" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            <div class="mb-3">
+              <label>Location</label>
+              <input type="text" name="location" value="<%= asset.location %>" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label>Stock No (NC/Fix)</label>
+              <input type="text" name="stockNo" value="<%= asset.stockNo %>" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label>Date of Purchase</label>
+              <input type="date" name="purchaseDate" value="<%= asset.purchaseDate ? asset.purchaseDate.toISOString().split('T')[0] : '' %>" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label>Unique Tag No</label>
+              <input type="text" name="uniqueTagNo" value="<%= asset.uniqueTagNo %>" class="form-control" readonly>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mt-4">
+      <button type="submit" class="btn btn-warning">Update Asset</button>
+    </div>
+
+  </form>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,22 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+   <h2>🗑️ Confirm Delete</h2>
+
+   <div class="alert-warning">
+    <p>Are you sure you want to delete the asset:</p>
+    <ul>
+      <li><strong>Name:</strong><%= asset.name %></li>
+      <li><strong>Type:</strong><%= asset.type %></li>
+      <li><strong>Owner:</strong><%= asset.owner %></li>
+    </ul>
+    <p>This action cannot be undone</p>
+   </div>
+
+   <form action="/assets/delete/<%= asset._id %>" method="POST">
+    <button type="Submit" class="btn-danger">Yes, Delete</button>
+    <a href="/assets" class="btn-secondary">Cancel</a>
+   </form>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,37 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+  <h2>🧾 Asset Report</h2>
+  <button onclick="window.print()" class="btn btn-success mb-3">🖨️ Print Report</button>
+
+  <a href="/asset/report/download" class="btn btn-success mb-3">⬇️ Download CSV</a>
+
+  <a href="/asset/report/pdf" class="btn btn-info mb-3" download>📄 Download as PDF</a>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Owner</th>
+        <th>Description</th>
+        <th>Created At</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% assets.forEach(asset => { %>
+        <tr>
+          <td><%= asset.manualId %></td>
+          <td><%= asset.name %></td>
+          <td><%= asset.type %></td>
+          <td><%= asset.owner %></td>
+          <td><%= asset.description %></td>
+          <td><%= asset.createdAt ? asset.createdAt.toLocaleString() : 'N/A' %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+<%- include('../partials/footer') %>

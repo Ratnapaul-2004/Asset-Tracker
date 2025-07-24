@@ -1,0 +1,95 @@
+<%- include('../partials/header') %>
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+  <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
+    <h2 class="text-center mb-4">📝 Register</h2>
+
+    <% if (error) { %>
+      <div class="alert alert-danger text-center">
+        <%= error %>
+      </div>
+    <% } %>
+
+    <% if (success) { %>
+      <div class="alert alert-success text-center">
+        <%= success %>
+      </div>
+    <% } %>
+
+    <form method="POST" action="/register" autocomplete="off"> 
+      <div class="mb-3">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          class="form-control"
+          autocomplete="off" 
+          placeholder="Enter your name"
+          required
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          class="form-control"
+          autocomplete="off" 
+          placeholder="Enter your email"
+          required
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          class="form-control"
+          autocomplete="new-password" 
+          placeholder="Enter a strong password"
+          required
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="role">Role</label>
+        <select
+          name="role"
+          class="form-control"
+          required>
+            <option value="trainee">Trainee</option>
+            <option value="admin">Admin</option>
+        </select>
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn btn-success">Register</button>
+      </div>
+
+      <div class="text-center mt-3">
+        Already have an account? <a href="/login" class="text-decoration-none">Login here</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  function disableAutofill() {
+    document.querySelector('[name="email"]').value = '';
+    document.querySelector('[name="password"]').value = '';
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      document.querySelector('[name="email"]').value = '';
+      document.querySelector('[name="password"]').value = '';
+    }, 50); // override autofill after render
+  });
+</script>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,80 @@
+<%- include('../partials/header') %>
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+  <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
+    <h2 class="text-center mb-4">🔐 Login</h2>
+
+    <% if (error) { %>
+      <div class="alert alert-danger"><%= error %></div>
+    <% } %>
+
+    <% if (success) { %>
+      <div class="alert alert-success"><%= success %></div>
+    <% } %>
+
+    <% if (query.message) { %>
+      <div class="alert alert-success"><%= query.message %></div>
+    <% } %>
+
+
+    <form method="POST" action="/login" autocomplete="off">
+      <div class="mb-3">
+        <label for="email">Email:</label>
+        <input 
+          type="email" 
+          name="email" 
+          id="email" 
+          class="form-control"
+          placeholder="Enter your email"
+          required 
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="password">Password:</label>
+        <input 
+          type="password" 
+          name="password" 
+          id="password" 
+          class="form-control"
+          autocomplete="new-password" 
+          placeholder="Enter your password"
+          required 
+        />
+      </div>
+
+      <!----Google reCAPTCHA----->
+      <div class="g-recaptcha" data-sitekey="<%= siteKey %>"></div>
+
+      <button type="submit" class="btn btn-primary">Login</button>
+
+      <div class="text-center mt-3">
+        <a href="/forgot-password" class="text-decoration-none">Forgot Password?</a>
+      </div>
+
+      <div class="text-center mt-3">
+        New User? <a href="/register" class="text-decoration-none">Register here</a>
+      </div>
+    </form>
+
+    <!-- Include reCAPTCHA script -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  </div>
+</div>
+
+
+<script>
+  function disableAutofill() {
+    document.querySelector('[name="email"]').value = '';
+    document.querySelector('[name="password"]').value = '';
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      document.querySelector('[name="email"]').value = '';
+      document.querySelector('[name="password"]').value = '';
+    }, 50); // override autofill after render
+  });
+</script>
+
+<%- include('../partials/footer') %>

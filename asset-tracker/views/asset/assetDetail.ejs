@@ -1,0 +1,36 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+  <h2>🔍 Asset Details</h2>
+
+  <img src="<%= asset.image || '/images/default.jpg' %>" alt="Asset Image" class="img-thumbnail" width="150" />
+  <!-- <p>🧪 Debug Image Path: <%= asset.image %></p> -->
+
+  <p><strong>Asset Id:</strong> <%= asset.manualId %></p>
+  <p><strong>Name:</strong> <%= asset.name %></p>
+  <p><strong>Model No:</strong> <%= asset.modelNo %></p>
+  <p><strong>Class:</strong> <%= asset.deviceClass %></p>
+  <p><strong>Owner:</strong> <%= asset.owner %></p>
+  <p><strong>Description:</strong> <%= asset.description %></p>
+  <p><strong>Custodian Name:</strong><%= asset.custodianName %></p>
+  <p><strong>Designation:</strong><%= asset.designation %></p>
+  <p><strong>Employee Id:</strong><%= asset.employeeId %></p>
+  <p><strong>Department:</strong><%= asset.department %></p>
+  <p><strong>Device Type:</strong> <%= asset.deviceType %></p>
+  <p><strong>Location:</strong><%= asset.location %></p>
+  <p><strong>Make:</strong><%= asset.make %></p>
+  <p><strong>Model No:</strong><%= asset.modelNo %></p>
+  <p><strong>Serial No:</strong><%= asset.serialNo %></p>
+  <p><strong>Stock No:</strong><%= asset.stockNo %></p>
+  <p><strong>Purchase Date:</strong><%= asset.createdAt.toLocaleString() %></p>
+  <p><strong>Operating System:</strong> <%= asset.operatingSystem %></p>
+  <p><strong>IP User Name:</strong><%= asset.ipUserName %></p>
+  <p><strong>IP Address:</strong><%= asset.ipAddress %></p>
+  <p><strong>MAC Address:</strong><%= asset.macAddress %></p>
+  
+  <% if (typeof user !== 'undefined' && (user?.role === 'admin' || user?.role === 'trainee')) { %>
+    <a href="/asset" class="btn btn-secondary">Back to Asset List</a>
+  <% } %>
+</div>
+
+<%- include('../partials/footer') %>

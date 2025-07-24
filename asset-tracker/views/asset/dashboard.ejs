@@ -1,0 +1,60 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-5">
+  <div class="text-center mb-4">
+    <h1 class="fw-bold text-primary">📊 AssetTrackr Dashboard</h1>
+    <p class="text-muted">Welcome, <strong><%= user?.name %></strong>!</p>
+  </div>
+
+  <div class="row g-4">
+    <!-- Total Assets -->
+    <div class="col-md-3">
+      <div class="card shadow-sm border-0 text-center">
+        <div class="card-body">
+          <h5 class="card-title text-success">Assets</h5>
+          <h2><%= totalAssets %></h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total Users -->
+    <div class="col-md-3">
+      <div class="card shadow-sm border-0 text-center">
+        <div class="card-body">
+          <h5 class="card-title text-info">Users</h5>
+          <h2><%= totalUsers %></h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- Report Button -->
+    <div class="col-md-3">
+      <a href="/asset/report" class="text-decoration-none">
+        <div class="card shadow-sm border-0 text-center bg-warning text-dark">
+          <div class="card-body">
+            <h5 class="card-title">Generate Report</h5>
+            <i class="bi bi-file-earmark-bar-graph" style="font-size: 2rem;"></i>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Add Asset -->
+    <div class="col-md-3">
+      <a href="/asset/add" class="text-decoration-none">
+        <div class="card shadow-sm border-0 text-center bg-primary text-white">
+          <div class="card-body">
+            <h5 class="card-title">Add New Asset</h5>
+            <i class="bi bi-plus-circle" style="font-size: 2rem;"></i>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="mt-5 text-center">
+    <a href="/asset" class="btn btn-outline-secondary btn-lg">🔍 View All Assets</a>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
