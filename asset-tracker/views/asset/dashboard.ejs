@@ -3,7 +3,7 @@
 <div class="container mt-5">
   <div class="text-center mb-4">
     <h1 class="fw-bold text-primary">📊 AssetTrackr Dashboard</h1>
-    <p class="text-muted">Welcome, <strong><%= user?.name %></strong>!</p>
+    <p class="text-muted">Welcome, <strong><%= user ? user.name : 'Guest' %></strong>!</p>
   </div>
 
   <div class="row g-4">
