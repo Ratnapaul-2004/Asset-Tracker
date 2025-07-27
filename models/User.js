@@ -18,6 +18,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ['admin', 'trainee'],
     // default: 'trainee'
+  },
+  designation: {
+    type: String,
+    default: 'None'
+  },
+  employeeId: {
+    type: String,
+    default: 'None'
+  },
+  department: {
+    type: String,
+    default: 'None'
   }
 });
 
