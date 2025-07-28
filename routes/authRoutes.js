@@ -76,7 +76,11 @@ router.get('/register', (req, res) => {
 });
 
 router.post('/register', async (req, res) => {
-  const {name, email, password, role} = req.body;
+  const {name, email, password, role, 
+    designation = 'none', 
+    employeeId = 'none', 
+    department = 'none'
+  } = req.body;
   const trimmedEmail = email?.trim().toLowerCase();  
 
   try {
@@ -98,7 +102,10 @@ router.post('/register', async (req, res) => {
       name, 
       email: trimmedEmail, 
       password: hashedPassword,
-      role 
+      role,
+      designation: role === 'admin' ? designation: 'none',
+      employeeId: role === 'admin' ? designation: 'none',
+      department: role === 'admin' ? department : 'none'
     });
 
     console.log("👤 Registering:", {
@@ -132,8 +139,6 @@ router.get('/users', isAuthenticated, async (req, res) => {
   const users = await User.find();
   res.render('auth/usersList', { users });
 });
-
-
 
 
 //-----------FORGOT PASSWORD----------

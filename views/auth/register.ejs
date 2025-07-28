@@ -60,11 +60,30 @@
         <label for="role">Role</label>
         <select
           name="role"
+          id="role"
           class="form-control"
           required>
-            <option value="trainee">Trainee</option>
-            <option value="admin">Admin</option>
+          <option value="">-- Select Role --</option>
+          <option value="trainee">Trainee</option>
+          <option value="admin">Admin</option>
         </select>
+      </div>
+
+      <div id="adminFields" style="display: none;">
+        <div class="mb-3">
+          <label for="designation">Designation</label>
+          <input type="text" class="form-control" name="designation" id="designation" placeholder="Enter Designation">
+        </div>
+
+        <div class="mb-3">
+          <label for="employeeId">Employee ID</label>
+          <input type="text" class="form-control" name="employeeId" id="employeeId" placeholder="Enter Employee ID">
+        </div>
+
+        <div class="mb-3">
+          <label for="department">Department</label>
+          <input type="text" class="form-control" name="department" id="department" placeholder="Enter Department">
+        </div>
       </div>
 
       <div class="d-grid">
@@ -79,17 +98,70 @@
 </div>
 
 <script>
-  function disableAutofill() {
-    document.querySelector('[name="email"]').value = '';
-    document.querySelector('[name="password"]').value = '';
-  }
 
-  window.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => {
-      document.querySelector('[name="email"]').value = '';
-      document.querySelector('[name="password"]').value = '';
-    }, 50); // override autofill after render
+  document.addEventListener('DOMContentLoaded', () => {
+    const roleSelect = document.getElementById('role');
+    const adminFields = document.getElementById('adminFields');
+
+    function toggleAdminFields() {
+      if (roleSelect.value === 'admin') {
+        adminFields.style.display = 'block';
+        document.getElementById('designation').required = true;
+        document.getElementById('employeeId').required = true;
+        document.getElementById('department').required = true;
+      } else {
+        adminFields.style.display = 'none';
+        document.getElementById('designation').value = 'none';
+        document.getElementById('employeeId').value = 'none';
+        document.getElementById('department').value = 'none';
+        document.getElementById('designation').required = false;
+        document.getElementById('employeeId').required = false;
+        document.getElementById('department').required = false;
+      }
+    }
+
+    // On page load
+    toggleAdminFields();
+
+    // When role changes
+    roleSelect.addEventListener('change', toggleAdminFields);
   });
+
+  // function disableAutofill() {
+  //   document.querySelector('[name="email"]').value = '';
+  //   document.querySelector('[name="password"]').value = '';
+  // }
+
+  // window.addEventListener('DOMContentLoaded', () => {
+  //   setTimeout(() => {
+  //     disableAutofill();
+  //   }, 50); // override autofill after render
+
+  //   const roleSelect = document.querySelector('select[name="role"]');
+  //   const adminFields = document.getElementById('adminFields');
+
+  //   // Show/hide admin fields on load (in case of browser back/refresh)
+  //     toggleAdminFields(roleSelect.value);
+
+  //   // Show/hide on role change
+  //   roleSelect.addEventListener('change', (e) => {
+  //     toggleAdminFields(e.target.value);
+  //   });
+
+  //   function toggleAdminFields(role) {
+  //     if(role === 'admin') {
+  //       adminFields.style.display = 'block';
+  //       // Clear out any defaults if switching from trainee
+  //       document.getElementById('designation') = '';
+  //       document.getElementById('employeeId') = '';
+  //       document.getElementById('department') = '';
+  //     } else {
+  //       document.getElementById('designation') = 'none';
+  //       document.getElementById('employeeId') = 'none';
+  //       document.getElementById('department') = 'none';
+  //     }
+  //   }
+  // });
 </script>
 
 <%- include('../partials/footer') %>
