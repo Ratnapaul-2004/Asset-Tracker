@@ -104,7 +104,7 @@ router.post('/register', async (req, res) => {
       password: hashedPassword,
       role,
       designation: role === 'admin' ? designation: 'none',
-      employeeId: role === 'admin' ? designation: 'none',
+      employeeId: role === 'admin' ? employeeId: 'none',
       department: role === 'admin' ? department : 'none'
     });
 
@@ -192,7 +192,10 @@ router.get('/logout', (req, res) => {
       return res.status(500).send("Logout failed");
     }
 
+    res.set('Clear-Site-Data', '"storage"'); // Clears sessionStorage and localStorage
+
     res.clearCookie('connect.sid'); // optional, clears session cookie
+    
     res.redirect('/login?message=Logged+out+successfully');
  // redirect to login after logout
   });

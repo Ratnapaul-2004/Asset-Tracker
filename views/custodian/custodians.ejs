@@ -1,0 +1,39 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>👤 Custodian List</h3>
+    <a href="/custodians/add" class="btn btn-primary">+ Add New Custodian</a>
+  </div>
+
+  <% if (custodians.length > 0) { %>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Designation</th>
+            <th>Employee ID</th>
+            <th>Department</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% custodians.forEach((custodian, index) => { %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td><%= custodian.name %></td>
+              <td><%= custodian.designation || 'N/A' %></td>
+              <td><%= custodian.employeeId || 'N/A' %></td>
+              <td><%= custodian.department || 'N/A' %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  <% } else { %>
+    <p class="text-muted">No custodians found.</p>
+  <% } %>
+</div>
+
+<%- include('../partials/footer') %>

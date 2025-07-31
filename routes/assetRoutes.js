@@ -6,6 +6,7 @@ const express = require('express');
 const router = express.Router();
 const Asset = require('../models/Asset');
 const User = require('../models/User');
+const Custodian = require('../models/Custodian');
 const multer = require('multer');
 const { Parser } = require('json2csv');
 const PDFDocument = require('pdfkit');
@@ -61,7 +62,7 @@ router.get('/', roleCheck(['admin', 'trainee']), async (req, res) => {
           );
           await asset.save();
         }
-        return asset.toObject();        // simple plain object for EJS
+        return asset.toObject();  // simple plain object for EJS
       })
     );
 
@@ -94,11 +95,15 @@ const upload = multer({storage});
 
 //------------Add Asset Form----------
 router.get('/add', roleCheck(['admin']), async (req, res) => {
-  const admins = await User.find({role: 'admin'});
-  console.log(admins);
-  res.render('asset/addAsset', {
-    asset: null
-  });
+  try {
+    const custodians = await Custodian.find();
+    res.render('asset/addAsset', {
+      asset: null,
+      custodians
+    }); 
+  } catch (err) {
+    res.status(500).send("Failed to load form");
+  }
 });
 
 router.post('/add', roleCheck(['admin']), upload.single('image'), async (req, res) => {

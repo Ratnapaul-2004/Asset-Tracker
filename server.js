@@ -63,8 +63,10 @@ app.use((req, res, next) => {
 // ✅ Routes
 const authRoutes = require('./routes/authRoutes');
 const assetRoutes = require('./routes/assetRoutes');
+const custodianRoutes = require('./routes/custodianRoutes');
 app.use('/', authRoutes);
 app.use('/asset', assetRoutes);
+app.use('/custodians', custodianRoutes);
 
 // ✅ Start Server
 app.listen(port, () => {

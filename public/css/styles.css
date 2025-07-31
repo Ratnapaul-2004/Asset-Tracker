@@ -1,0 +1,23 @@
+body.dark-mode {
+  background-color: #121212;
+  color: #f0f0f0;
+}
+
+body.dark-mode .card {
+  background-color: #1f1f1f;
+  color: #f0f0f0;
+}
+
+body.dark-mode .navbar,
+body.dark-mode .footer {
+  background-color: #1c1c1c !important;
+}
+
+body.dark-mode .btn-outline-secondary {
+  color: #f0f0f0;
+  border-color: #ccc;
+}
+
+body.dark-mode .card-title {
+  color: #f8f8f8;
+}

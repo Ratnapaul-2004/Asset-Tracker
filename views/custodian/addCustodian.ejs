@@ -1,0 +1,30 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-4">
+  <h3>Add Custodian</h3>
+  <form action="/custodians/add" method="POST">
+    <div class="mb-3">
+      <label>Name</label>
+      <input type="text" name="name" class="form-control" required />
+    </div>
+    <div class="mb-3">
+      <label>Email</label>
+      <input type="email" name="email" class="form-control" required />
+    </div>
+    <div class="mb-3">
+      <label>Employee ID</label>
+      <input type="text" name="employeeId" class="form-control" required />
+    </div>
+    <div class="mb-3">
+      <label>Designation</label>
+      <input type="text" name="designation" class="form-control" />
+    </div>
+    <div class="mb-3">
+      <label>Department</label>
+      <input type="text" name="department" class="form-control" />
+    </div>
+    <button class="btn btn-primary">Add Custodian</button>
+  </form>
+</div>
+
+<%- include('../partials/footer') %>
