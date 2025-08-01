@@ -11,29 +11,5 @@
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <script>
-    // Apply stored theme on load
-    document.addEventListener("DOMContentLoaded", () => {
-      const savedTheme = sessionStorage.getItem("theme");
-      if (savedTheme === "dark") {
-        document.body.classList.add("dark-mode");
-        const toggle = document.getElementById("themeToggle");
-        if (toggle) toggle.checked = true;
-      }
-
-      const themeToggle = document.getElementById("themeToggle");
-      if (themeToggle) {
-        themeToggle.addEventListener("change", function () {
-          if (this.checked) {
-            document.body.classList.add("dark-mode");
-            sessionStorage.setItem("theme", "dark");
-          } else {
-            document.body.classList.remove("dark-mode");
-            sessionStorage.setItem("theme", "light");
-          }
-        });
-      }
-    });
-  </script>
 </body>
 </html>

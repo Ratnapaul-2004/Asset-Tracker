@@ -34,6 +34,11 @@ router.get('/dashboard', roleCheck(['admin', 'trainee']), async (req, res) => {
   }
 });
 
+//-------------TOGGLE BUTTON-------
+router.post('/toggle-dark-mode', (req, res) => {
+  req.session.darkMode = !req.session.darkMode;
+  res.json({ success: true });
+});
 
 //------------View All Assets----------
 router.get('/', roleCheck(['admin', 'trainee']), async (req, res) => {

@@ -60,6 +60,12 @@ app.use((req, res, next) => {
    next();
 });
 
+app.use((req, res, next) => {
+  res.locals.session = req.session; // ✅ This makes session available in EJS
+  res.locals.user = req.session.user; // Optional, for <%= user.name %>
+  next();
+});
+
 // ✅ Routes
 const authRoutes = require('./routes/authRoutes');
 const assetRoutes = require('./routes/assetRoutes');
