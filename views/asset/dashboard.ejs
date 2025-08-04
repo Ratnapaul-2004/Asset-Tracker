@@ -16,22 +16,28 @@
   <!-- Top Cards: Total Assets & Users -->
   <div class="row g-4 justify-content-center mb-4">
     <div class="col-md-4 col-sm-6">
-      <div class="card shadow-lg border-0 text-center">
-        <div class="card-body">
-          <h5 class="card-title text-success fw-semibold">Assets</h5>
-          <h2 class="display-6"><%= totalAssets %></h2>
+      <a href="/asset" class="text-decoration-none">
+        <div class="card shadow-lg border-0 text-center">
+          <div class="card-body">
+            <h5 class="card-title text-success fw-semibold">Assets</h5>
+            <h2 class="display-6"><%= totalAssets %></h2>
+          </div>
         </div>
-      </div>
+      </a>
     </div>
 
-    <div class="col-md-4 col-sm-6">
-      <div class="card shadow-lg border-0 text-center">
-        <div class="card-body">
-          <h5 class="card-title text-info fw-semibold">Users</h5>
-          <h2 class="display-6"><%= totalUsers %></h2>
-        </div>
+    <%= if(user && user.role === 'admin') { %>
+      <div class="col-md-4 col-sm-6">
+        <a href="/users" class="text-decoration-none">
+          <div class="card shadow-lg border-0 text-center">
+            <div class="card-body">
+              <h5 class="card-title text-info fw-semibold">Users</h5>
+              <h2 class="display-6"><%= totalUsers %></h2>
+            </div>
+          </div>
+        </a>
       </div>
-    </div>
+    <% } %>
   </div>
 
   <!-- Action Buttons: Report, Add Asset, Manage Custodians -->
@@ -68,12 +74,6 @@
       </div>
     <% } %>
   </div>
-
-  <!-- View All Assets -->
-  <div class="text-center mt-5">
-    <a href="/asset" class="btn btn-outline-secondary btn-lg shadow-sm">🔍 View All Assets</a>
-  </div>
-</div>
 
 <script>
     // Apply stored theme on load

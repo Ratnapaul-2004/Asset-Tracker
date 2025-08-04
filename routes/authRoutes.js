@@ -166,12 +166,35 @@ function isAuthenticated(req, res, next) {
 }
 
 router.get('/users', isAuthenticated, async (req, res) => {
-  const users = await User.find();
-  res.render('auth/usersList', { 
-    users,
-    user: req.session.user,
-    url: req.originalUrl
-  });
+  const user = req.session.user;
+
+  if(user.role !== 'admin') {
+    return res.status(403).render('auth/unauthorized', 
+    {
+      user,
+      url: req.originalUrl,
+      message: 'Only admins can view the user list'
+    });
+  }
+
+  try {
+    const users = await User.find();
+    res.render('auth/usersList', { 
+      users,
+      user: req.session.user,
+      url: req.originalUrl
+    });
+  } catch (err) {
+    console.error("User list error: ", err);
+    res.status(500).render('auth/unauthorized', 
+      {
+        user,
+        url: req.originalUrl,
+        message: 'Internal Server Error'
+      }
+    )
+  }
+  
 });
 
 
