@@ -169,12 +169,7 @@ router.get('/users', isAuthenticated, async (req, res) => {
   const user = req.session.user;
 
   if(user.role !== 'admin') {
-    return res.status(403).render('auth/unauthorized', 
-    {
-      user,
-      url: req.originalUrl,
-      message: 'Only admins can view the user list'
-    });
+    return res.redirect('/dashboard');
   }
 
   try {
@@ -186,13 +181,7 @@ router.get('/users', isAuthenticated, async (req, res) => {
     });
   } catch (err) {
     console.error("User list error: ", err);
-    res.status(500).render('auth/unauthorized', 
-      {
-        user,
-        url: req.originalUrl,
-        message: 'Internal Server Error'
-      }
-    )
+    return res.redirect('/dashboard');
   }
   
 });
