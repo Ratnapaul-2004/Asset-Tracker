@@ -247,7 +247,10 @@ router.put('/edit/:id', async (req, res) => {
     const assetId = req.params.id;
     const updatedData = req.body;
 
-    await Asset.findByIdAndUpdate(assetId, updatedData);
+    console.log("🛠️ Updating Asset:", assetId);
+    console.log("📥 Incoming Data:", updatedData);
+
+    await Asset.findByIdAndUpdate(assetId, updatedData, {new: true});
     res.redirect('/asset');
   } catch (error) {
     console.error('❌ Error updating asset:', error);
