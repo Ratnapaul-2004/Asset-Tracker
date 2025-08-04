@@ -76,7 +76,7 @@ router.post('/login', async (req, res) => {
     }
 
     req.session.user = user;
-    return res.redirect('asset/dashboard');
+    return res.redirect('/dashboard');
 
   } catch (err) {
     console.error('Login error:', err);
