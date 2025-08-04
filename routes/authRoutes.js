@@ -5,7 +5,7 @@ const router = express.Router();
 
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
-
+const Asset = require('../models/Asset');
 
 // Central Function to render Login Page safely
 function renderLogin(res, {
@@ -35,13 +35,13 @@ router.post('/login', async (req, res) => {
   console.log("📩 Full req.body:", req.body);
 
   if (!email || !password) {
-    renderLogin(res, {
+    return renderLogin(res, {
       error: 'Please provide both email and password'
     });
   }
 
   if (!captcha) {
-    renderLogin(res, {
+    return renderLogin(res, {
       error: 'Please complete the CAPTCHA'
     });
   }
@@ -213,13 +213,21 @@ router.get('/logout', (req, res) => {
 
 
 //------------DASHBOARD---------
-router.get('/dashboard', (req, res) => {
+router.get('/dashboard', isAuthenticated, async (req, res) => {
   const user = req.session.user;
   if(!user){
     return res.redirect('/login');
   }
 
-  res.render('asset/dashboard', {user});
+  try {
+    const totalAssets = await Asset.countDocuments();
+    const totalUsers = await User.countDocuments();
+
+    res.render('asset/dashboard', { user, totalAssets, totalUsers });
+  } catch (err) {
+    console.error("Dashboard load error:", err);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 module.exports = router;
