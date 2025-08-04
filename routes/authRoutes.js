@@ -6,9 +6,6 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
-router.get('/', (req, res) => {
-  res.redirect('/login');
-});
 
 
 //----------LOGIN------------

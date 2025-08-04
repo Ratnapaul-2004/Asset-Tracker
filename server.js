@@ -74,6 +74,10 @@ app.use('/', authRoutes);
 app.use('/asset', assetRoutes);
 app.use('/custodians', custodianRoutes);
 
+app.get('/', (req, res) => {
+  res.redirect('/login');
+});
+
 // ✅ Start Server
 app.listen(port, () => {
   console.log(`🚀 Server running at port ${port}`);
