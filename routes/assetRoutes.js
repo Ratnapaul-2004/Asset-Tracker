@@ -244,13 +244,14 @@ router.get('/edit/:id', roleCheck(["admin"]), async (req, res) => {
 
 router.put('/edit/:id', async (req, res) => {
   try {
+    console.log("📩 Incoming update body:", req.body);
     const assetId = req.params.id;
     const updatedData = req.body;
 
     console.log("🛠️ Updating Asset:", assetId);
     console.log("📥 Incoming Data:", updatedData);
 
-    await Asset.findByIdAndUpdate(assetId, updatedData, {new: true});
+    await Asset.findByIdAndUpdate(assetId, updatedData, { runValidators: true });
     res.redirect('/asset');
   } catch (error) {
     console.error('❌ Error updating asset:', error);
