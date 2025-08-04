@@ -7,10 +7,27 @@ const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
 
+// Central Function to render Login Page safely
+function renderLogin(res, {
+  error = null,
+  success = null,
+  query = {} }) {
+    return res.render('auth/login', {
+      error,
+      success,
+      query,
+      siteKey: process.env.RECAPTCHA_SITE_KEY
+    });
+}
+
 
 //----------LOGIN------------
 router.get('/login', (req, res) => {
-  res.render('auth/login', {error: null, success: null, query: req.query, siteKey: process.env.RECAPTCHA_SITE_KEY});
+  renderLogin(res, {
+    error: null,
+    success: null,
+    query: req.query
+  });
 });
 
 router.post('/login', async (req, res) => {
@@ -18,14 +35,15 @@ router.post('/login', async (req, res) => {
   console.log("📩 Full req.body:", req.body);
 
   if (!email || !password) {
-    return res.render('auth/login', {
-      error: 'Please provide both email and password.',
-      success: null
+    renderLogin(res, {
+      error: 'Please provide both email and password'
     });
   }
 
   if (!captcha) {
-    return res.render('auth/login', { error: 'Please complete the CAPTCHA.', success: null });
+    renderLogin(res, {
+      error: 'Please complete the CAPTCHA'
+    });
   }
 
   try {
@@ -33,7 +51,7 @@ router.post('/login', async (req, res) => {
     const response = await axios.post(verifyURL);
 
     if (!response.data.success) {
-      return res.render('auth/login', { error: 'CAPTCHA verification failed.', success: null });
+      return renderLogin(res, { error: 'CAPTCHA verification failed' });
     }
 
     const user = await User.findOne({
@@ -41,19 +59,13 @@ router.post('/login', async (req, res) => {
     });
 
     if (!user) {
-      return res.render('auth/login', {
-        error: 'User not found.',
-        success: null
-      });
+      return renderLogin(res, { error: 'User not found' });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      return res.render('auth/login', {
-        error: 'Incorrect password.',
-        success: null
-      });
+        return renderLogin(res, { error: 'Incorrect password' });
     }
 
     req.session.user = user;
@@ -61,10 +73,7 @@ router.post('/login', async (req, res) => {
 
   } catch (err) {
     console.error('Login error:', err);
-    return res.render('auth/login', {
-      error: 'Something went wrong.',
-      success: null
-    });
+    return renderLogin(res, { error: 'Something went wrong. Please try again' });
   }
 });
 
@@ -196,7 +205,7 @@ router.get('/logout', (req, res) => {
 
     res.clearCookie('connect.sid'); // optional, clears session cookie
     
-    res.redirect('/login?message=Logged+out+successfully');
+    return res.redirect('/login?message=Logged+out+successfully');
  // redirect to login after logout
   });
 });
@@ -209,8 +218,6 @@ router.get('/dashboard', (req, res) => {
   if(!user){
     return res.redirect('/login');
   }
-
-//   res.send(`<h2>Welcome, ${req.session.user.email}</h2><a href="/logout">Logout</a>`);
 
   res.render('asset/dashboard', {user});
 });
