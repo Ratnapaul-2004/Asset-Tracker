@@ -27,11 +27,14 @@
 
       <div class="collapse navbar-collapse" id="navbarContent">
         <ul class="navbar-nav ms-auto">
-          <% if (url && url.startsWith('/asset')) { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/dashboard">Home</a>
+          </li>
+          <!-- <% if (url && url.startsWith('/asset')) { %>
             <li class="nav-item">
               <a class="nav-link" href="/dashboard">Home</a>
             </li>
-          <% } %>
+          <% } %> -->
           <% if (typeof user !== 'undefined') { %>
             <li class="nav-item">
               <a class="nav-link" href="/logout">Logout</a>
