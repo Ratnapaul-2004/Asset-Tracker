@@ -156,7 +156,7 @@ router.post('/add', roleCheck(['admin']), upload.single('image'), async (req, re
 });
 
 //------------------Report Page-------------
-router.get('/report', roleCheck(['admin']), async (req, res) => {
+router.get('/report', async (req, res) => {
   const assets = await Asset.find();
   res.render('asset/report', {assets});
 });
