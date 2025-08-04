@@ -89,22 +89,38 @@
         </h2>
         <div id="custodianDetails" class="accordion-collapse collapse">
           <div class="accordion-body">
+
             <div class="mb-3">
-              <label>Custodian Name</label>
-              <input type="text" name="custodianName" value="<%= asset.custodianName %>" class="form-control">
-            </div>
-            <div class="mb-3">
-              <label>Designation</label>
-              <input type="text" name="designation" value="<%= asset.designation %>" class="form-control">
-            </div>
-            <div class="mb-3">
-              <label>Employee ID</label>
-              <input type="text" name="employeeId" value="<%= asset.employeeId %>" class="form-control">
-            </div>
-            <div class="mb-3">
-              <label>Department</label>
-              <input type="text" name="department" value="<%= asset.department %>" class="form-control">
-            </div>
+                <label>Custodian Name</label>
+                <select name="custodianName" id="custodianName" class="form-control" required>
+                  <option value="">-- Select Custodian --</option>
+                  <% custodians.forEach(c => { %>
+                    <option value="<%= c.name %>"
+                      data-designation="<%= c.designation %>"
+                      data-employeeid="<%= c.employeeId %>"
+                      data-department="<%= c.department %>">
+                      <%= asset.custodianName === c.name ? 'selected' : '' %>>
+                      <%= c.name %>
+                    </option>
+                  <% }) %>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label>Designation</label>
+                <input type="text" name="designation" id="designation" class="form-control" required>
+              </div>
+
+              <div class="mb-3">
+                <label>Employee ID</label>
+                <input type="text" name="employeeId" id="employeeId" class="form-control" required>
+              </div>
+
+              <div class="mb-3">
+                <label>Department</label>
+                <input type="text" name="department" id="department" class="form-control" required>
+              </div>
+
           </div>
         </div>
       </div>
@@ -175,5 +191,23 @@
 
   </form>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const custodianSelect = document.getElementById('custodianName');
+    const designationField = document.getElementById('designation');
+    const employeeIdField = document.getElementById('employeeId');
+    const departmentField = document.getElementById('department');
+
+    if (custodianSelect) {
+      custodianSelect.addEventListener('change', function () {
+        const selected = this.options[this.selectedIndex];
+        designationField.value = selected.getAttribute('data-designation') || '';
+        employeeIdField.value = selected.getAttribute('data-employeeid') || '';
+        departmentField.value = selected.getAttribute('data-department') || '';
+      });
+    }
+  });
+</script>
 
 <%- include('../partials/footer') %>

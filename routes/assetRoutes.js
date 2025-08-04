@@ -156,7 +156,7 @@ router.post('/add', roleCheck(['admin']), upload.single('image'), async (req, re
 });
 
 //------------------Report Page-------------
-router.get('/report', async (req, res) => {
+router.get('/report', roleCheck(['admin', 'trainee']), async (req, res) => {
   const assets = await Asset.find();
   res.render('asset/report', {assets});
 });
@@ -225,13 +225,24 @@ router.get('/:id', roleCheck(['admin', 'trainee']), async (req, res) => {
 });
 
 //-----------------Edit Asset Form----------
-router.get('/edit/:id', roleCheck(['admin']), async (req, res) => {
-  const asset = await Asset.findById(req.params.id);
-  if(!asset) return res.status(404).send('Asset not found');
-  res.render('asset/editAsset', {asset});
+router.get('/edit/:id', roleCheck(["admin"]), async (req, res) => {
+  try {
+    const asset = await Asset.findById(req.params.id);
+    const custodians = await Custodian.find();
+
+    res.render('asset/editAsset', {
+      asset,
+      custodians,
+      user: req.session.user,
+      url: req.originalUrl
+    });
+  } catch (err) {
+    console.error("Edit asset error:", err);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
-router.put('/edit/:id', roleCheck(['admin', 'trainee']), async (req, res) => {
+router.put('/edit/:id', async (req, res) => {
   try {
     const assetId = req.params.id;
     const updatedData = req.body;
