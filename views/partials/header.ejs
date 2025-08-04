@@ -27,14 +27,16 @@
 
       <div class="collapse navbar-collapse" id="navbarContent">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="/dashboard">Home</a>
-          </li>
-          <% if (typeof user !== 'undefined') { %>
+          <% if (url && url !== '/login' && url !== '/register' && url !== '/dashboard') { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/dashboard">Home</a>
+            </li>
+          <% } %>
+          <% if (user && url !== '/login' && url !== '/register') { %>
             <li class="nav-item">
               <a class="nav-link" href="/logout">Logout</a>
             </li>
-          <% } else { %>
+          <% } else if (!user && url !== '/login' && url !== '/register') { %>
             <li class="nav-item">
               <a class="nav-link" href="/login">Login</a>
             </li>

@@ -11,12 +11,17 @@ const Asset = require('../models/Asset');
 function renderLogin(res, {
   error = null,
   success = null,
-  query = {} }) {
+  query = {},
+  user = null,
+  url = '/login'
+   }) {
     return res.render('auth/login', {
       error,
       success,
       query,
-      siteKey: process.env.RECAPTCHA_SITE_KEY
+      siteKey: process.env.RECAPTCHA_SITE_KEY,
+      user,
+      url
     });
 }
 
@@ -26,7 +31,9 @@ router.get('/login', (req, res) => {
   renderLogin(res, {
     error: null,
     success: null,
-    query: req.query
+    query: req.query,
+    user: req.session.user,
+    url: req.originalUrl
   });
 });
 
@@ -81,7 +88,12 @@ router.post('/login', async (req, res) => {
 
 //------------REGISTER---------
 router.get('/register', (req, res) => {
-  res.render('auth/register', {error: null, success: null});
+  res.render('auth/register', {
+    error: null, 
+    success: null,
+    user: req.session.user,
+    url: req.originalUrl
+  });
 });
 
 router.post('/register', async (req, res) => {
@@ -96,14 +108,21 @@ router.post('/register', async (req, res) => {
      if (!name || !trimmedEmail || !password) {
       return res.render('auth/register', {
         error: 'All fields are required.',
-        success: null
+        success: null,
+        user: req.session.user,
+        url: req.originalUrl
       });
     }
 
     const exists = await User.findOne({ email: new RegExp(`^${trimmedEmail}$`, 'i') });
 
     if (exists) {
-      return res.render('auth/register', { error: 'Email already exists.', success: null });
+      return res.render('auth/register', { 
+        error: 'Email already exists.', 
+        success: null,
+        user: req.session.user,
+        url: req.originalUrl 
+      });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -130,8 +149,10 @@ router.post('/register', async (req, res) => {
   } catch (err) {
     console.error('❌ Registration error:', err);
     return res.render('auth/register', {
-      error: 'Something went wrong. Try again.',
-      success: null
+      error: 'Something went wrong. Try again',
+      success: null,
+      user: req.session.user,
+      url: req.originalUrl
     });
   }
 });
@@ -146,13 +167,22 @@ function isAuthenticated(req, res, next) {
 
 router.get('/users', isAuthenticated, async (req, res) => {
   const users = await User.find();
-  res.render('auth/usersList', { users });
+  res.render('auth/usersList', { 
+    users,
+    user: req.session.user,
+    url: req.originalUrl
+  });
 });
 
 
 //-----------FORGOT PASSWORD----------
 router.get('/forgot-password', (req, res) => {
-  return res.render('auth/forgotPassword', {error: null, message: null});
+  return res.render('auth/forgotPassword', {
+    error: null, 
+    message: null,
+    user: req.session.user,
+    url: req.originalUrl
+  });
 });
 
 router.post('/forgot-password', async (req, res) => {
@@ -161,8 +191,10 @@ router.post('/forgot-password', async (req, res) => {
 
     if (!email) {
       return res.render('auth/forgotPassword', {
-        error: 'Please enter your email.',
-        message: null
+        error: 'Please enter your email',
+        message: null,
+        user: req.session.user,
+        url: req.originalUrl
       });
     }
 
@@ -172,22 +204,28 @@ router.post('/forgot-password', async (req, res) => {
 
     if (!user) {
       return res.render('auth/forgotPassword', {
-        error: 'No account found with this email.',
-        message: null
+        error: 'No account found with this email',
+        message: null,
+        user: req.session.user,
+        url: req.originalUrl
       });
     }
 
     console.log(`📧 Sending reset link to: ${email}`);
 
     return res.render('auth/forgotPassword', {
-      message: 'A password reset link has been sent to your email.',
-      error: null
+      message: 'A password reset link has been sent to your email',
+      error: null,
+      user: req.session.user,
+      url: req.originalUrl
     });
   } catch (err) {
     console.error('❌ Forgot password error:', err);
     return res.render('auth/forgotPassword', {
-      error: 'Something went wrong.',
-      message: null
+      message: null,
+      error: 'Something went wrong',
+      user: req.session.user,
+      url: req.originalUrl
     });
   }
 });
@@ -223,7 +261,12 @@ router.get('/dashboard', isAuthenticated, async (req, res) => {
     const totalAssets = await Asset.countDocuments();
     const totalUsers = await User.countDocuments();
 
-    res.render('asset/dashboard', { user, totalAssets, totalUsers });
+    res.render('asset/dashboard', { 
+      user, 
+      totalAssets, 
+      totalUsers,
+      url: req.originalUrl
+    });
   } catch (err) {
     console.error("Dashboard load error:", err);
     res.status(500).send("Internal Server Error");
