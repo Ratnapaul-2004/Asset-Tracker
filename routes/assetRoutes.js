@@ -243,28 +243,35 @@ router.get('/edit/:id', roleCheck(["admin"]), async (req, res) => {
 });
 
 router.post('/edit/:id', async (req, res) => {
-  try {
-    console.log("📩 Incoming update body:", req.body);
-    const assetId = req.params.id;
-    const updatedData = req.body;
-
-    console.log("🛠️ Updating Asset:", assetId);
-    console.log("📥 Incoming Data:", updatedData);
-
-    await Asset.findByIdAndUpdate(assetId, updatedData, { runValidators: true });
-    res.redirect('/asset');
-  } catch (error) {
-    console.error('❌ Error updating asset:', error);
-    res.status(500).send('Internal Server Error');
-  }
+  console.log("✅ POST /edit hit");
+  console.log(req.body);
+  await Asset.findByIdAndUpdate(req.params.id, req.body);
+  res.redirect('/asset');
 });
 
-//-----------------Delete Asset Page--------
-router.get('/delete/:id', roleCheck(['admin']), async (req, res) => {
-  const asset = await Asset.findById(req.params.id);
-  if(!asset) return res.status(404).send('Asset not found');
-  res.render('asset/deleteAsset', {asset});
-});
+// router.put('/edit/:id', async (req, res) => {
+//   try {
+//     console.log("📩 Incoming update body:", req.body);
+//     const assetId = req.params.id;
+//     const updatedData = req.body;
+
+//     console.log("🛠️ Updating Asset:", assetId);
+//     console.log("📥 Incoming Data:", updatedData);
+
+//     await Asset.findByIdAndUpdate(assetId, updatedData, { runValidators: true });
+//     res.redirect('/asset');
+//   } catch (error) {
+//     console.error('❌ Error updating asset:', error);
+//     res.status(500).send('Internal Server Error');
+//   }
+// });
+
+// //-----------------Delete Asset Page--------
+// router.get('/delete/:id', roleCheck(['admin']), async (req, res) => {
+//   const asset = await Asset.findById(req.params.id);
+//   if(!asset) return res.status(404).send('Asset not found');
+//   res.render('asset/deleteAsset', {asset});
+// });
 
 router.post('/delete/:id', roleCheck(['admin']), async (req, res) => {
   await Asset.findByIdAndDelete(req.params.id);
