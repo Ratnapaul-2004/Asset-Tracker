@@ -242,38 +242,22 @@ router.get('/edit/:id', roleCheck(["admin"]), async (req, res) => {
   }
 });
 
-router.post('/edit/:id', async (req, res) => {
+
+router.put('/edit/:id', async (req, res) => {
   try {
     const assetId = req.params.id;
-    const update = req.body;
+    const updatedData = req.body;
 
-    console.log("🛠️ Updating asset:", assetId);
-    console.log("📥 Body:", update);
+    console.log("🛠️ Updating Asset:", assetId);
+    console.log("📥 Incoming Data:", updatedData);
 
-    await Asset.findByIdAndUpdate(assetId, update, { runValidators: true });
+    await Asset.findByIdAndUpdate(assetId, updatedData, { runValidators: true });
     res.redirect('/asset');
-  } catch (err) {
-    console.error('❌ Error updating asset:', err);
-    res.status(500).send("Update failed.");
+  } catch (error) {
+    console.error('❌ Error updating asset:', error);
+    res.status(500).send('Internal Server Error');
   }
 });
-
-// router.put('/edit/:id', async (req, res) => {
-//   try {
-//     console.log("📩 Incoming update body:", req.body);
-//     const assetId = req.params.id;
-//     const updatedData = req.body;
-
-//     console.log("🛠️ Updating Asset:", assetId);
-//     console.log("📥 Incoming Data:", updatedData);
-
-//     await Asset.findByIdAndUpdate(assetId, updatedData, { runValidators: true });
-//     res.redirect('/asset');
-//   } catch (error) {
-//     console.error('❌ Error updating asset:', error);
-//     res.status(500).send('Internal Server Error');
-//   }
-// });
 
 // //-----------------Delete Asset Page--------
 // router.get('/delete/:id', roleCheck(['admin']), async (req, res) => {
