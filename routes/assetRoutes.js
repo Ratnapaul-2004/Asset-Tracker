@@ -242,7 +242,7 @@ router.get('/edit/:id', roleCheck(["admin"]), async (req, res) => {
   }
 });
 
-router.put('/edit/:id', async (req, res) => {
+router.post('/edit/:id', async (req, res) => {
   try {
     console.log("📩 Incoming update body:", req.body);
     const assetId = req.params.id;
