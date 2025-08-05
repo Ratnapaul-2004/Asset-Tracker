@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 dotenv.config({ path: path.resolve(__dirname, './.env') });
 const mongoose = require('mongoose');
 const express = require('express');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const session = require('express-session');
 const methodOverride = require('method-override');
 const fs = require('fs');
@@ -30,7 +30,7 @@ mongoose.connect(process.env.MONGO_URI, {
 .catch(err => console.error('❌ MongoDB connection error:', err));
 
 // ✅ Middleware
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.json());

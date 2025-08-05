@@ -244,11 +244,16 @@ router.get('/edit/:id', roleCheck(["admin"]), async (req, res) => {
 
 router.post('/edit/:id', async (req, res) => {
   try {
-    console.log("📥 Asset update body:", req.body); // Debug log
-    await Asset.findByIdAndUpdate(req.params.id, req.body, { runValidators: true });
-    res.redirect('/asset'); // Redirect after update
+    const assetId = req.params.id;
+    const update = req.body;
+
+    console.log("🛠️ Updating asset:", assetId);
+    console.log("📥 Body:", update);
+
+    await Asset.findByIdAndUpdate(assetId, update, { runValidators: true });
+    res.redirect('/asset');
   } catch (err) {
-    console.error("❌ Error updating asset:", err);
+    console.error('❌ Error updating asset:', err);
     res.status(500).send("Update failed.");
   }
 });
