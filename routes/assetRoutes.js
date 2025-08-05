@@ -259,13 +259,7 @@ router.put('/edit/:id', async (req, res) => {
   }
 });
 
-// //-----------------Delete Asset Page--------
-// router.get('/delete/:id', roleCheck(['admin']), async (req, res) => {
-//   const asset = await Asset.findById(req.params.id);
-//   if(!asset) return res.status(404).send('Asset not found');
-//   res.render('asset/deleteAsset', {asset});
-// });
-
+//---------------Delete Asset-----------
 router.post('/delete/:id', roleCheck(['admin']), async (req, res) => {
   await Asset.findByIdAndDelete(req.params.id);
   res.redirect('asset/assets');
