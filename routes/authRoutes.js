@@ -54,8 +54,23 @@ router.post('/login', async (req, res) => {
   }
 
   try {
-    const verifyURL = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${captcha}`;
-    const response = await axios.post(verifyURL);
+    // const verifyURL = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${captcha}`;
+    // const response = await axios.post(verifyURL);
+
+      const response = await axios.post(
+      'https://www.google.com/recaptcha/api/siteverify',
+      new URLSearchParams({
+        secret: process.env.RECAPTCHA_SECRET_KEY,
+        response: captcha
+      }).toString(),
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }
+    );
+
+    console.log("🔍 reCAPTCHA verification response:", response.data);
 
     if (!response.data.success) {
       return renderLogin(res, { error: 'CAPTCHA verification failed' });
