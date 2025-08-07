@@ -1,8 +1,6 @@
 const path = require('path');
-
 const dotenv = require('dotenv');
 dotenv.config({ path: path.resolve(__dirname, './.env') });
-
 const mongoose = require('mongoose');
 const express = require('express');
 // const bodyParser = require('body-parser');
@@ -11,6 +9,7 @@ const methodOverride = require('method-override');
 const fs = require('fs');
 
 const app = express();
+const port=8080;
 
 // 🔍 Confirm .env loaded
 console.log("🔍 MONGO_URI from .env:", process.env.MONGO_URI);
@@ -80,6 +79,6 @@ app.get('/', (req, res) => {
 });
 
 // ✅ Start Server
-app.listen(PORT, () => {
+app.listen(port, () => {
   console.log(`🚀 Server running at port ${port}`);
 });
