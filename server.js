@@ -9,7 +9,6 @@ const methodOverride = require('method-override');
 const fs = require('fs');
 
 const app = express();
-const port = 8080;
 
 // 🔍 Confirm .env loaded
 console.log("🔍 MONGO_URI from .env:", process.env.MONGO_URI);
@@ -79,6 +78,6 @@ app.get('/', (req, res) => {
 });
 
 // ✅ Start Server
-app.listen(port, () => {
+app.listen(PORT, () => {
   console.log(`🚀 Server running at port ${port}`);
 });
