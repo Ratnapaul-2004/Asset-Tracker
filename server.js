@@ -9,11 +9,10 @@ const methodOverride = require('method-override');
 const fs = require('fs');
 
 const app = express();
-const port=8080;
+const port = process.env.PORT || 8080;
 
 // 🔍 Confirm .env loaded
 console.log("🔍 MONGO_URI from .env:", process.env.MONGO_URI);
-console.log("TEST_ENV: ", process.env.TEST_ENV);
 console.log("📂 Current dir:", __dirname);
 console.log("📄 .env file exists:", fs.existsSync(path.join(__dirname, '.env')));
 
