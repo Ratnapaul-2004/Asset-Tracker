@@ -26,8 +26,15 @@ mongoose.connect(process.env.MONGO_URI, {
   serverSelectionTimeoutMS: 10000,
   socketTimeoutMS: 45000
 })
-.then(() => console.log('✅ Connected to MongoDB Atlas'))
+.then(() => console.log('✅ Connected to Local MongoDB'))
 .catch(err => console.error('❌ MongoDB connection error:', err));
+
+// mongoose.connect(process.env.MONGO_URI, {
+//   serverSelectionTimeoutMS: 10000,
+//   socketTimeoutMS: 45000
+// })
+// .then(() => console.log('✅ Connected to MongoDB Atlas'))
+// .catch(err => console.error('❌ MongoDB connection error:', err));
 
 // ✅ Middleware
 // app.use(bodyParser.urlencoded({ extended: true }));
